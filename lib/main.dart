@@ -34,6 +34,17 @@ class _QuizPageState extends State<QuizPage> {
   int questionNumber = 0;
   List<bool> answer = [false, true, true];
 
+  void answerTest(bool userAns) {
+    if (userAns == true && answer[questionNumber] == true ||
+        userAns == false && answer[questionNumber] == false) {
+      scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+    } else {
+      scoreKeeper.add(
+        Icon(Icons.close, color: Colors.red),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,7 +81,10 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked true.
+                setState(() {
+                  answerTest(true);
+                  questionNumber++;
+                });
               },
             ),
           ),
@@ -89,6 +103,10 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
+                setState(() {
+                  answerTest(false);
+                  questionNumber++;
+                });
               },
             ),
           ),
