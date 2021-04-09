@@ -31,13 +31,16 @@ class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
   void checkAnswer(bool userAns) {
-    if (userAns == quizBrain.getQuestionAnswer()) {
-      scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-    } else {
-      scoreKeeper.add(
-        Icon(Icons.close, color: Colors.red),
-      );
-    }
+    setState(() {
+      if (userAns == quizBrain.getQuestionAnswer()) {
+        scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+      } else {
+        scoreKeeper.add(
+          Icon(Icons.close, color: Colors.red),
+        );
+      }
+      quizBrain.getNextQuestion();
+    });
   }
 
   @override
@@ -76,10 +79,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  checkAnswer(true);
-                  quizBrain.getNextQuestion();
-                });
+                checkAnswer(true);
               },
             ),
           ),
@@ -98,10 +98,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
-                setState(() {
-                  checkAnswer(false);
-                  quizBrain.getNextQuestion();
-                });
+                checkAnswer(false);
               },
             ),
           ),
